@@ -1,0 +1,18 @@
+# blogging/views.py
+
+from django.shortcuts import render
+from django.http import Http404
+from blogging.models import Post
+
+def list_view(request):
+    context = {'polls': Post.objects.all()}
+    return render(request, 'blogging/list.html', context)
+
+def detail_view(request, blog_id):
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        raise Http404
+
+    context = {'post': post}
+    return render(request, 'blogging/detail.html', context)

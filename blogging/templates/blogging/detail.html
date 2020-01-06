@@ -1,0 +1,10 @@
+{# blogging/templates/blogging/detail.html #}
+
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ blog.title }}</h1>
+<h2>{{ blog.created_at }} : {{ blog.author }}</h2>
+<div class="blog-text">
+    {{ blog.text }}
+</div>
+{% endblock %}
