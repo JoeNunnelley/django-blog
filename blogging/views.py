@@ -5,12 +5,13 @@ from django.http import Http404
 from blogging.models import Post
 
 def list_view(request):
-    context = {'polls': Post.objects.all()}
+    context = {'posts': Post.objects.all()}
     return render(request, 'blogging/list.html', context)
+
 
 def detail_view(request, blog_id):
     try:
-        post = Post.objects.get(pk=post_id)
+        post = Post.objects.get(pk=blog_id)
     except Post.DoesNotExist:
         raise Http404
 
