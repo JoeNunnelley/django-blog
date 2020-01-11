@@ -1,19 +1,40 @@
 # blogging/views.py
 
 from django.shortcuts import render
-from django.http import Http404
+from django.template import loader
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from blogging.models import Post
 
-def list_view(request):
+def list_view_all(request):
     context = {'posts': Post.objects.all()}
     return render(request, 'blogging/list.html', context)
 
 
-def detail_view(request, blog_id):
+def list_view(request):
+    published = Post.objects.exclude(published_date__exact=None)
+    posts = published.order_by('-published_date')
+    context = {'posts': posts}
+    return render(request, 'blogging/list.html', context)
+    
+
+def detail_view(request, post_id):
+    published = Post.objects.exclude(published_date__exact=None)
     try:
-        post = Post.objects.get(pk=blog_id)
+        post = published.get(pk=post_id)
     except Post.DoesNotExist:
         raise Http404
 
     context = {'post': post}
     return render(request, 'blogging/detail.html', context)
+
+
+def stub_view(request, *args, **kwargs):
+    body = "Stub View\n\n"
+    if args:
+        body += "Args:\n"
+        body += "\n".join(["\t%s" % a for a in args])
+    if kwargs:
+        body += "Kwargs:\n"
+        body += "\n".join(["\t%s: %s" % i for i in kwargs.items()])
+    return HttpResponse(body, content_type="text/plain")
+
