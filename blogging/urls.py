@@ -13,8 +13,8 @@ router.register(r'posts', PostViewSet)
 router.register(r'categories', CategoryViewSet)
 
 urlpatterns = [
-    path('', list_view, name="blog_index"),
+    path('blog', list_view, name="blog_index"),
     path('posts/<int:post_id>/', detail_view, name="blog_detail"),
     path('latest/feed/', LatestEntriesFeed()),
-    path('api-auth/', include(router.urls)),
+    path('', include(router.urls)),
 ]
