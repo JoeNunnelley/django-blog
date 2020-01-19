@@ -11,12 +11,13 @@ class CategoryInline(admin.TabularInline):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'text', 'author',  'created_date', 'published_date')
+    list_display = ('title', 'text', 'author',
+                    'created_date', 'published_date')
     list_filter = ('created_date',)
     date_hierarchy = 'created_date'
     ordering = ('-created_date',)
     fields = ('title', 'text', 'author', )
-    inlines = [ CategoryInline, ]
+    inlines = [CategoryInline, ]
     exclude = ('posts',)
 
 
